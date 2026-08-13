@@ -5,7 +5,7 @@ import { AuthGuard } from './auth.guard';
 import { UseGuards } from '@nestjs/common';
 import { ResetPasswordDto, SendOtpDto, VerifyEmailDto } from './dto/send-otp-dto';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { RolesGuard } from './auth.user';
+import { Role, RolesGuard } from './auth.user';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Authentication')
@@ -29,6 +29,26 @@ export class AuthController {
     @Get('protected')
     getProtectedResource(@Request() req) {
         return { message: 'This is a protected resource', user: req.user };
+    }
+
+    @ApiBearerAuth()
+    @ApiOperation({ summary: 'Access a protected resource for users' })
+    @ApiResponse({ status: 200, description: 'Returns a confirmation message.'})
+    @UseGuards(AuthGuard, RolesGuard) // for roles
+    @Role('user') // specify roles that can access this route
+    @Get('protected-users')
+    getUserProtectedResource(@Request() req) {
+        return { message: 'This is a protected resource for users', user: req.user };
+    }
+
+    @ApiBearerAuth()
+    @ApiOperation({ summary: 'Access a protected resource for users' })
+    @ApiResponse({ status: 200, description: 'Returns a confirmation message.'})
+    @UseGuards(AuthGuard, RolesGuard) // for roles
+    @Role('admin') // specify roles that can access this route
+    @Get('protected-admin')
+    getAdminProtectedResource(@Request() req) {
+        return { message: 'This is a protected resource for admin', user: req.user };
     }
 
     @ApiOperation({ summary: 'Register a new user' })
@@ -87,3 +107,4 @@ export class AuthController {
         return this.authService.user(req.user);
     }
 }
+
