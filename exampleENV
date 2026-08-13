@@ -1,17 +1,11 @@
-DB_HOST=
-DB_PORT=
-DB_USERNAME=
-DB_PASSWORD=
-DB_DATABASE=
+# Environment
+# NODE_ENV=development
 
-PORT=
-NODE_ENV=
+# Port your NestJS app will run on
+# PORT=4000
 
-MAIL_HOST=
-MAIL_PORT=
-MAIL_USERNAME=
-MAIL_PASSWORD=
-MAIL_FROM_ADDRESS=
+# MongoDB Atlas connection string
+# MONGO_URI=mongodb+srv:......
 
-"postgres"
-DATABASE_URL=
+# Frontend URL for CORS configuration
+# FRONTEND_URL=http://localhost:3000
